@@ -26,4 +26,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::post('login', [AuthController::class, 'login']);
 Route::post('register', [AuthController::class, 'register']);
 
-Route::middleware('api.auth')->apiResource('commandes', CommandeController::class);
+Route::middleware('api.auth')->group(function () {
+    Route::apiResource('commandes', CommandeController::class);
+    Route::get("commandes/{ref}/produits", [CommandeController::class, 'getProduitByRef']);
+});
