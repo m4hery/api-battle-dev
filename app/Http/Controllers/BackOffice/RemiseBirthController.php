@@ -43,7 +43,7 @@ class RemiseBirthController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(RemiseBirth $remiseBirth)
+    public function show(RemiseBirth $remise_birth)
     {
         //
     }
@@ -51,7 +51,7 @@ class RemiseBirthController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, RemiseBirth $remiseBirth)
+    public function update(Request $request, RemiseBirth $remise_birth)
     {
         $vs = Validator::make($request->all(), [
             'nbr_by_birth' => 'required|integer',
@@ -64,17 +64,17 @@ class RemiseBirthController extends Controller
             return response()->json($vs->errors(), 400);
         }
 
-        $remiseBirth->update($request->all());
-        $remiseBirth->fresh();
-        return response()->json($remiseBirth, 200);
+        $remise_birth->update($request->all());
+        $remise_birth->fresh();
+        return response()->json($remise_birth, 200);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(RemiseBirth $remiseBirth)
+    public function destroy(RemiseBirth $remise_birth)
     {
-        $remiseBirth->delete();
+        $remise_birth->delete();
 
         return response()->json(null, 204);
     }

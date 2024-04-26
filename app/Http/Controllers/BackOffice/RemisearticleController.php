@@ -53,7 +53,7 @@ class RemisearticleController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Remisearticle $remisearticle)
+    public function update(Request $request, Remisearticle $remise_article)
     {
         $vs = Validator::make($request->all(), [
             'nbr_article' => 'required|integer',
@@ -68,17 +68,17 @@ class RemisearticleController extends Controller
             return response()->json($vs->errors(), 422);
         }
 
-        $remisearticle->update($request->all());
-        $remisearticle->fresh();
-        return response()->json($remisearticle);
+        $remise_article->update($request->all());
+        $remise_article->fresh();
+        return response()->json($remise_article);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Remisearticle $remisearticle)
+    public function destroy(Remisearticle $remise_article)
     {
-        $remisearticle->delete();
+        $remise_article->delete();
 
         return response()->json(['message' => 'Remisearticle deleted']);
     }

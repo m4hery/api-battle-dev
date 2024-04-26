@@ -69,7 +69,7 @@ class CommandeController extends Controller
         $commande = Commande::create([
             'user_id' => $request->user->id,
             'dateOfCommand' => now(),
-            "ref" => "CMD-" . time(),
+            "ref" => "CMD-" . time() .$request->user->id,
         ]);
 
         foreach ($request->paniers as $panier) {
@@ -84,38 +84,40 @@ class CommandeController extends Controller
         {
             $commande_source = Commande::where('ref', $request->ref)->first();
             $user_source = $commande_source->user;
-            $montantTotalCommande = $commande->chocolatCommandes->sum('totalPrice');
-
-            if((int)$montantTotalCommande < 200000 )
+            if($user_source->id !== $request->user->id)
             {
-                $comm = Commande::create([
-                    'user_id' => $user_source->id,
-                    'dateOfCommand' => now(),
-                    "ref" => "CMD-" . time(),
-                    "isPaid" => true,
-                ]);
+                $montantTotalCommande = $commande->chocolatCommandes->sum('totalPrice');
 
-                foreach ($commande_source->chocolatCommandes as $panier) {
-                    $comm->chocolatCommandes()->create([
-                        'chocolat_nom' => $panier->chocolat_nom,
-                        'quantity' => $panier->quantity,
-                        'totalPrice' => $panier->totalPrice,
+                if((int)$montantTotalCommande < 200000 )
+                {
+                    $comm = Commande::create([
+                        'user_id' => $user_source->id,
+                        'dateOfCommand' => now(),
+                        "ref" => "CMD-" . time() . $request->user->id,
+                        "isPaid" => true,
                     ]);
+    
+                    foreach ($commande_source->chocolatCommandes as $panier) {
+                        $comm->chocolatCommandes()->create([
+                            'chocolat_nom' => $panier->chocolat_nom,
+                            'quantity' => $panier->quantity,
+                            'totalPrice' => $panier->totalPrice,
+                        ]);
+                    }
                 }
+    
+                $bon_achat = $this->checkBonachat($montantTotalCommande);
+                if( isset($user_source->bon_achat))
+                {
+                    $user_source->bon_achat()->update([
+                        'montant' => isset($user_source->bon_achat) ? $user_source->bon_achat->montant + $bon_achat : $bon_achat,
+                    ]);
+                } else {
+                    $user_source->bon_achat()->create([
+                        'montant' => $bon_achat,
+                    ]);
+                }    
             }
-
-            $bon_achat = $this->checkBonachat($montantTotalCommande);
-            if( isset($user_source->bon_achat))
-            {
-                $user_source->bon_achat()->update([
-                    'montant' => isset($user_source->bon_achat) ? $user_source->bon_achat->montant + $bon_achat : $bon_achat,
-                ]);
-            } else {
-                $user_source->bon_achat()->create([
-                    'montant' => $bon_achat,
-                ]);
-            }
-
         }
        
 
