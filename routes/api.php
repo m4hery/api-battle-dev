@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BackOffice\AuthController as BackOfficeAuthController;
+use App\Http\Controllers\BackOffice\StatistiqueController;
 use App\Http\Controllers\CommandeController;
 
 /*
@@ -35,4 +36,5 @@ Route::middleware('api.auth')->group(function () {
 
 Route::prefix('admin')->group(function () {
     Route::post('login', [BackOfficeAuthController::class, 'login']);
+    Route::get('/stat/vente-produit', [StatistiqueController::class, 'venteProduit']);
 });
