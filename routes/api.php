@@ -35,7 +35,7 @@ Route::middleware('api.auth')->group(function () {
     Route::get("commande/group", [CommandeController::class, 'getCommandes']);
     Route::get("commandes/{ref}/produits", [CommandeController::class, 'getProduitByRef']);
     Route::get("bon-achat", [CommandeController::class, 'getBonDachat']);
-    Route::get("reset-bon-achat", [CommandeController::class, 'resetBonDachat']);
+    Route::post("reset-bon-achat", [CommandeController::class, 'resetBonDachat']);
 });
 Route::get("commande/{ref}", [CommandeController::class, 'getProduitByRef']);
 Route::get("/remise-article", [RemisearticleController::class, 'index']);
