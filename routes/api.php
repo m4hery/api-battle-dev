@@ -9,6 +9,7 @@ use App\Http\Controllers\CommandeController;
 use App\Http\Controllers\BackOffice\StatistiqueController;
 use App\Http\Controllers\BackOffice\RemisearticleController;
 use App\Http\Controllers\BackOffice\AuthController as BackOfficeAuthController;
+use App\Http\Controllers\BackOffice\RemiseBirthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -45,4 +46,7 @@ Route::prefix('admin')->group(function () {
 
     Route::apiResource('remise-articles', RemisearticleController::class);
     Route::post('remise-change/{remisearticle}', [RemisearticleController::class, 'changeActif']);
+
+    Route::apiResources("remise-birth", RemiseBirthController::class);
+    
 });
