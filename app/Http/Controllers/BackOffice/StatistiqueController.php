@@ -131,4 +131,31 @@ class StatistiqueController extends Controller
             'data' => $trueData,
         ]);
     }
+
+    public function venteClient()
+    {
+        $commandes = Commande::all();
+        $data = [];
+        $trueData = [];
+        $labels = [];
+        foreach ($commandes as $commande) {
+            $client = $commande->user->name;
+            foreach ($commande->chocolatCommandes as $chocolatCommande) {
+                if (array_key_exists($client, $data)) {
+                    $data[$client] += $chocolatCommande->quantity;
+                } else {
+                    $data[$client] = $chocolatCommande->quantity;
+                }
+            }
+        }
+        foreach ($data as $key => $value) {
+            $labels[] = $key;
+            $trueData[] = $value;
+        }
+
+        return response()->json([
+            'labels' => $labels,
+            'data' => $trueData,
+        ]);
+    }
 }
