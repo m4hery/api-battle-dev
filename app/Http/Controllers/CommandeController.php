@@ -151,7 +151,7 @@ class CommandeController extends Controller
     {
         $bon_achat = $request->user->bon_achat;
         return response()->json([
-            "montant" => $bon_achat ? $bon_achat->montant : 0,
+            "montant" => isset($bon_achat) ? $bon_achat->montant : 0,
         ]);
     }
 
