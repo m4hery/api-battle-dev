@@ -34,8 +34,12 @@ Route::middleware('api.auth')->group(function () {
     Route::apiResource('commandes', CommandeController::class);
     Route::get("commande/group", [CommandeController::class, 'getCommandes']);
     Route::get("commandes/{ref}/produits", [CommandeController::class, 'getProduitByRef']);
+    Route::get("bon-achat", [CommandeController::class, 'getBonDachat']);
+    Route::get("reset-bon-achat", [CommandeController::class, 'resetBonDachat']);
 });
 Route::get("commande/{ref}", [CommandeController::class, 'getProduitByRef']);
+Route::get("/remise-article", [RemisearticleController::class, 'index']);
+Route::get("/remise-birth", [RemiseBirthController::class, 'index']);
 
 Route::prefix('admin')->group(function () {
     Route::post('login', [BackOfficeAuthController::class, 'login']);

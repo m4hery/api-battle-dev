@@ -146,4 +146,23 @@ class CommandeController extends Controller
         $commande = Commande::where('ref', $ref)->first();
         return response()->json($commande->info_produit);
     }
+
+    public function getBonDachat(Request $request)
+    {
+        $bon_achat = $request->user->bon_achat;
+        return response()->json([
+            "montant" => $bon_achat ? $bon_achat->montant : 0,
+        ]);
+    }
+
+    public function resetBonDachat(Request $request)
+    {
+        $request->user->bon_achat()->update([
+            'montant' => 0,
+        ]);
+
+        return response()->json([
+            "montant" => 0,
+        ]);
+    }
 }
