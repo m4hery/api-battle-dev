@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Validator;
 
 class CommandeController extends Controller
 {
+    // protected function checkBonachat
 
     public function getCommandes(Request $request)
     {
