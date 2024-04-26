@@ -47,6 +47,6 @@ Route::prefix('admin')->group(function () {
     Route::apiResource('remise-articles', RemisearticleController::class);
     Route::post('remise-change/{remisearticle}', [RemisearticleController::class, 'changeActif']);
 
-    Route::apiResources("remise-birth", RemiseBirthController::class);
-    
+    Route::apiResource("remise-birth", RemiseBirthController::class);
+
 });
