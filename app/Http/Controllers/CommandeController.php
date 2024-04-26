@@ -8,6 +8,17 @@ use Illuminate\Support\Facades\Validator;
 
 class CommandeController extends Controller
 {
+
+    public function getCommandes(Request $request)
+    {
+        $commandes = Commande::where('user_id', $request->user->id)->get();
+        $data = [];
+        foreach ($commandes as $commande) {
+            $data[] = $commande->info_commande_group;
+        }
+
+        return response()->json($data);
+    }
     /**
      * Display a listing of the resource.
      */
@@ -61,14 +72,6 @@ class CommandeController extends Controller
     public function show(Commande $commande)
     {
         return response()->json($commande->info_commande);
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Commande $commande)
-    {
-        //
     }
 
     /**
