@@ -5,9 +5,10 @@ use Firebase\JWT\Key;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\BackOffice\AuthController as BackOfficeAuthController;
-use App\Http\Controllers\BackOffice\StatistiqueController;
 use App\Http\Controllers\CommandeController;
+use App\Http\Controllers\BackOffice\StatistiqueController;
+use App\Http\Controllers\BackOffice\RemisearticleController;
+use App\Http\Controllers\BackOffice\AuthController as BackOfficeAuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -41,4 +42,7 @@ Route::prefix('admin')->group(function () {
     Route::get('/stat/vente-origine', [StatistiqueController::class, 'venteOrigines']);
     Route::get('/stat/vente-sexe', [StatistiqueController::class, 'venteSexe']);
     Route::get('/stat/vente-client', [StatistiqueController::class, 'venteClient']);
+
+    Route::apiResource('remise-articles', RemisearticleController::class);
+    Route::post('remise-change/{remisearticle}', [RemisearticleController::class, 'changeActif']);
 });
