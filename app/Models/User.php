@@ -39,6 +39,11 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
+    public function bon_achat ()
+    {
+        return $this->hasOne(BonAchat::class);
+    }
+
     public function getInfoAuthAttribute ()
     {
         return [

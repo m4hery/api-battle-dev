@@ -38,6 +38,8 @@ class RemisearticleController extends Controller
         }
 
         $remisearticle = Remisearticle::create($request->all());
+
+        return response()->json($remisearticle, 201);
     }
 
     /**

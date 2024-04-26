@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Commande;
+use Illuminate\Console\Command;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -61,6 +62,14 @@ class CommandeController extends Controller
                'quantity' => $panier['quantity'],
                'totalPrice' => $panier['totalPrice'],
            ]);
+        }
+
+        if($request->has('ref'))
+        {
+            $commande_source = Commande::where('ref', $request->ref)->first();
+            $user_source = $commande_source->user;
+            
+            
         }
 
         return response()->json($commande->info_commande);
