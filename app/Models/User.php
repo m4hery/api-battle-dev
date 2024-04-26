@@ -48,6 +48,7 @@ class User extends Authenticatable
             "telephone" => $this->telephone,
             "adresse" => $this->adresse,
             'birth_day' => $this->birth_day,
+            "sexe" => $this->sexe,
             "expireIn" => 3600,
         ];
     }

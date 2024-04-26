@@ -5,6 +5,7 @@ use Firebase\JWT\Key;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\BackOffice\AuthController as BackOfficeAuthController;
 use App\Http\Controllers\CommandeController;
 
 /*
@@ -30,4 +31,8 @@ Route::middleware('api.auth')->group(function () {
     Route::apiResource('commandes', CommandeController::class);
     Route::get("commandes/{ref}/produits", [CommandeController::class, 'getProduitByRef']);
     Route::get("commande/group", [CommandeController::class, 'getCommandes']);
+});
+
+Route::prefix('admin')->group(function () {
+    Route::post('login', [BackOfficeAuthController::class, 'login']);
 });
