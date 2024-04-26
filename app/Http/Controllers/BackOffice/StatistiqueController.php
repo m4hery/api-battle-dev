@@ -77,5 +77,33 @@ class StatistiqueController extends Controller
         ]);
     }
 
+    public function venteOrigines()
+    {
+        $commandes = Commande::all();
+        $data = [];
+        $trueData = [];
+        $labels = [];
+        foreach ($commandes as $commande) {
+            
+            foreach ( $commande->info_commande_group[0]["products"] as $produit) {
+                // return $produit;
+                if (array_key_exists($produit['origine'], $data)) {
+                    $data[$produit['origine']] += $produit['quantity'];
+                } else {
+                    $data[$produit['origine']] = $produit['quantity'];
+                }
+            }
+        }
+        foreach ($data as $key => $value) {
+            $labels[] = $key;
+            $trueData[] = $value;
+        }
+
+        return response()->json([
+            'labels' => $labels,
+            'data' => $trueData,
+        ]);
+    }
+
 
 }

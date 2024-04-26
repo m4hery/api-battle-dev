@@ -38,4 +38,5 @@ Route::prefix('admin')->group(function () {
     Route::post('login', [BackOfficeAuthController::class, 'login']);
     Route::get('/stat/vente-produit', [StatistiqueController::class, 'venteProduit']);
     Route::get('/stat/vente-categorie', [StatistiqueController::class, 'venteCategories']);
+    Route::get('/stat/vente-origine', [StatistiqueController::class, 'venteOrigines']);
 });
