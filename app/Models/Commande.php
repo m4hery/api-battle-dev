@@ -17,6 +17,11 @@ class Commande extends Model
         return $this->hasMany(ChocolatCommande::class);
     }
 
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
     public function getInfoProduitAttribute()
     {
         $product = [];

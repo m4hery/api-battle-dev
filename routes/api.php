@@ -39,4 +39,5 @@ Route::prefix('admin')->group(function () {
     Route::get('/stat/vente-produit', [StatistiqueController::class, 'venteProduit']);
     Route::get('/stat/vente-categorie', [StatistiqueController::class, 'venteCategories']);
     Route::get('/stat/vente-origine', [StatistiqueController::class, 'venteOrigines']);
+    Route::get('/stat/vente-sexe', [StatistiqueController::class, 'venteSexe']);
 });

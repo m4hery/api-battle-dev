@@ -105,5 +105,30 @@ class StatistiqueController extends Controller
         ]);
     }
 
+    public function venteSexe()
+    {
+        $commandes = Commande::all();
+        $data = [];
+        $trueData = [];
+        $labels = [];
+        foreach ($commandes as $commande) {
+            $sexe = $commande->user->sexe;
+            foreach ($commande->chocolatCommandes as $chocolatCommande) {
+                if (array_key_exists($sexe, $data)) {
+                    $data[$sexe] += $chocolatCommande->quantity;
+                } else {
+                    $data[$sexe] = $chocolatCommande->quantity;
+                }
+            }
+        }
+        foreach ($data as $key => $value) {
+            $labels[] = $key;
+            $trueData[] = $value;
+        }
 
+        return response()->json([
+            'labels' => $labels,
+            'data' => $trueData,
+        ]);
+    }
 }
