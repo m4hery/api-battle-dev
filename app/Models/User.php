@@ -17,11 +17,7 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-    ];
+    protected $guarded = [];
 
     /**
      * The attributes that should be hidden for serialization.
@@ -42,4 +38,16 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function getInfoAuthAttribute ()
+    {
+        return [
+            "id" => $this->id,
+            "nom" => $this->name,
+            "email" => $this->email,
+            "telephone" => $this->telephone,
+            "adresse" => $this->adresse,
+            "expireIn" => 3600,
+        ];
+    }
 }
