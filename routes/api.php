@@ -35,7 +35,7 @@ Route::middleware('api.auth')->group(function () {
     Route::get("commande/group", [CommandeController::class, 'getCommandes']);
     Route::get("commandes/{ref}/produits", [CommandeController::class, 'getProduitByRef']);
 });
-Route::get("commandes/{ref}", [CommandeController::class, 'getProduitByRef']);
+Route::get("commande/{ref}", [CommandeController::class, 'getProduitByRef']);
 
 Route::prefix('admin')->group(function () {
     Route::post('login', [BackOfficeAuthController::class, 'login']);
