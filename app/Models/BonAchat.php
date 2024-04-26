@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class BonAchat extends Model
 {
     use HasFactory;
+
+    protected $guarded = [];
 }

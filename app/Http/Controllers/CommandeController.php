@@ -3,13 +3,28 @@
 namespace App\Http\Controllers;
 
 use App\Models\Commande;
+use GuzzleHttp\Promise\Create;
 use Illuminate\Console\Command;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
 class CommandeController extends Controller
 {
-    // protected function checkBonachat
+    protected function checkBonachat($montant)
+    {
+        $remise = 0;
+        //si le montant est inferieur ou egale a 30000
+        if ($montant <= 30000) {
+            $remise = $montant * 0.1;
+        } elseif ($montant > 30000 && $montant <= 50000) {
+            $remise = $montant * 0.25;
+        } elseif ($montant > 50000 && $montant <= 150000) {
+            $remise = $montant * 0.3;
+        } 
+
+        return $remise;
+    }
+
 
     public function getCommandes(Request $request)
     {
@@ -65,13 +80,44 @@ class CommandeController extends Controller
            ]);
         }
 
-        if($request->has('ref'))
+        if($request->has('ref') && $request->ref)
         {
             $commande_source = Commande::where('ref', $request->ref)->first();
             $user_source = $commande_source->user;
-            
-            
+            $montantTotalCommande = $commande->chocolatCommandes->sum('totalPrice');
+
+            if((int)$montantTotalCommande < 200000 )
+            {
+                $comm = Commande::create([
+                    'user_id' => $user_source->id,
+                    'dateOfCommand' => now(),
+                    "ref" => "CMD-" . time(),
+                    "isPaid" => true,
+                ]);
+
+                foreach ($commande_source->chocolatCommandes as $panier) {
+                    $comm->chocolatCommandes()->create([
+                        'chocolat_nom' => $panier->chocolat_nom,
+                        'quantity' => $panier->quantity,
+                        'totalPrice' => $panier->totalPrice,
+                    ]);
+                }
+            }
+
+            $bon_achat = $this->checkBonachat($montantTotalCommande);
+            if( isset($user_source->bon_achat))
+            {
+                $user_source->bon_achat()->update([
+                    'montant' => isset($user_source->bon_achat) ? $user_source->bon_achat->montant + $bon_achat : $bon_achat,
+                ]);
+            } else {
+                $user_source->bon_achat()->create([
+                    'montant' => $bon_achat,
+                ]);
+            }
+
         }
+       
 
         return response()->json($commande->info_commande);
     }

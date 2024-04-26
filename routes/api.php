@@ -32,9 +32,10 @@ Route::post('register', [AuthController::class, 'register']);
 
 Route::middleware('api.auth')->group(function () {
     Route::apiResource('commandes', CommandeController::class);
+    Route::get("commande/group", [CommandeController::class, 'getCommandes']);
+    Route::get("commandes/{ref}/produits", [CommandeController::class, 'getProduitByRef']);
 });
-Route::get("commandes/{ref}/produits", [CommandeController::class, 'getProduitByRef']);
-Route::get("commande/group", [CommandeController::class, 'getCommandes']);
+Route::get("commandes/{ref}", [CommandeController::class, 'getProduitByRef']);
 
 Route::prefix('admin')->group(function () {
     Route::post('login', [BackOfficeAuthController::class, 'login']);
