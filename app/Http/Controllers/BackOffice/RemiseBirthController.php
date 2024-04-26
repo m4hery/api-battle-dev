@@ -65,7 +65,7 @@ class RemiseBirthController extends Controller
         }
 
         $remiseBirth->update($request->all());
-
+        $remiseBirth->fresh();
         return response()->json($remiseBirth, 200);
     }
 

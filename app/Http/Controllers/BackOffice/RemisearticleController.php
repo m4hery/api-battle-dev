@@ -69,7 +69,7 @@ class RemisearticleController extends Controller
         }
 
         $remisearticle->update($request->all());
-
+        $remisearticle->fresh();
         return response()->json($remisearticle);
     }
 
