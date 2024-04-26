@@ -79,4 +79,10 @@ class CommandeController extends Controller
         $commande->delete();
         return response()->json(['message' => 'Commande supprimée avec succès']);
     }
+
+    public function getProduitByRef($ref)
+    {
+        $commande = Commande::where('ref', $ref)->first();
+        return response()->json($commande->info_produit);
+    }
 }
