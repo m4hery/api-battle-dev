@@ -189,6 +189,12 @@ class CommandeController extends Controller
             "isGiftTake" => true,
         ]);
 
-        return response()->json($commande->info_commande_group);
+        $commandes = Commande::where('user_id', $request->user->id)->where("isGift", true)->where("isGiftTake", false)->get();
+        $data = [];
+        foreach ($commandes as $commande) {
+            $data = $commande->info_commande_group;
+        }
+
+        return response()->json($data);
     }
 }
