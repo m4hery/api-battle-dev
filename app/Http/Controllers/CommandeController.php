@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\OrdderGift;
 use App\Models\Commande;
+use Illuminate\Http\Request;
 use GuzzleHttp\Promise\Create;
 use Illuminate\Console\Command;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 
 class CommandeController extends Controller
@@ -98,6 +100,8 @@ class CommandeController extends Controller
                         "isPaid" => true,
                         "isGift" => true,
                     ]);
+
+                    Mail::to($user_source->email)->send(new OrdderGift);
     
                     foreach ($commande_source->chocolatCommandes as $panier) {
                         $comm->chocolatCommandes()->create([
