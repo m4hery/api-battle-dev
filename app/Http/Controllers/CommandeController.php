@@ -170,7 +170,7 @@ class CommandeController extends Controller
 
     public function getGift(Request $request)
     {
-        $commandes = Commande::where('user_id', $request->user->id)->where("isGift", true)->get();
+        $commandes = Commande::where('user_id', $request->user->id)->where("isGift", true)->where("isGiftTake", false)->get();
         $data = [];
         foreach ($commandes as $commande) {
             $data = $commande->info_commande;
