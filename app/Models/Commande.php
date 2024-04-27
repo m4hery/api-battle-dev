@@ -80,6 +80,8 @@ class Commande extends Model
                "dateOfCommand" => $this->dateOfCommand,
                "products" => $product,
                "isPaid" => $this->isPaid,
+               "isGift" => $this->isGift,
+               "isGiftTake" => $this->isGiftTake,
             ];
 
         return $data;

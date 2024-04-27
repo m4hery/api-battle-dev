@@ -28,7 +28,7 @@ class CommandeController extends Controller
 
     public function getCommandes(Request $request)
     {
-        $commandes = Commande::where('user_id', $request->user->id)->get();
+        $commandes = Commande::where('user_id', $request->user->id)->where("isGift", false)->get();
         $data = [];
         foreach ($commandes as $commande) {
             $data[] = $commande->info_commande_group;
@@ -41,7 +41,7 @@ class CommandeController extends Controller
      */
     public function index(Request $request)
     {
-        $commandes = Commande::where('user_id', $request->user->id)->get();
+        $commandes = Commande::where('user_id', $request->user->id)->where("isGift", false)->get();
         $data = [];
         foreach ($commandes as $commande) {
             $data[] = $commande->info_commande;
@@ -96,6 +96,7 @@ class CommandeController extends Controller
                         'dateOfCommand' => now(),
                         "ref" => "CMD-" . time() . $request->user->id,
                         "isPaid" => true,
+                        "isGift" => true,
                     ]);
     
                     foreach ($commande_source->chocolatCommandes as $panier) {
@@ -144,7 +145,7 @@ class CommandeController extends Controller
 
     public function getProduitByRef($ref)
     {
-        $commande = Commande::where('ref', $ref)->first();
+        $commande = Commande::where('ref', $ref)->where("isGift", false)->first();
         return response()->json($commande->info_produit);
     }
 
@@ -159,11 +160,33 @@ class CommandeController extends Controller
     public function resetBonDachat(Request $request)
     {
         $request->user->bon_achat()->update([
-            'montant' => 0,
+            'montant' => $request->montant,
         ]);
 
         return response()->json([
             "montant" => 0,
         ]);
+    }
+
+    public function getGift(Request $request)
+    {
+        $commandes = Commande::where('user_id', $request->user->id)->where("isGift", true)->get();
+        $data = [];
+        foreach ($commandes as $commande) {
+            $data[] = $commande->info_commande;
+        }
+
+        return response()->json($data);
+    }
+
+    public function reclameGift(Request $request)
+    {
+        $commande = Commande::where('ref', $request->ref)->where("isGift", true)->first();
+        $commande->update([
+            'isPaid' => true,
+            "isGiftTake" => true,
+        ]);
+
+        return response()->json($commande->info_commande);
     }
 }
