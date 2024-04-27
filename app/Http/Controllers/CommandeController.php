@@ -181,7 +181,7 @@ class CommandeController extends Controller
 
     public function reclameGift(Request $request)
     {
-        $commande = Commande::where('ref', $request->ref)->where("isGift", true)->first();
+        $commande = Commande::where('ref', $request->ref)->first();
         $commande->update([
             'isPaid' => true,
             "isGiftTake" => true,
