@@ -55,6 +55,7 @@ class CommandeController extends Controller
      */
     public function store(Request $request)
     {
+        return response()->json($request->all());
         $vs = Validator::make($request->all(), [
             'paniers' => 'required|array',
             'paniers.*.nom' => 'required|string',
