@@ -15,7 +15,7 @@ class CommandeController extends Controller
     protected function checkBonachat($montant)
     {
         $remise = 0;
-        //si le montant est inferieur ou egale a 30000
+        
         if ($montant <= 30000) {
             $remise = $montant * 0.1;
         } elseif ($montant > 30000 && $montant <= 50000) {
@@ -57,7 +57,7 @@ class CommandeController extends Controller
      */
     public function store(Request $request)
     {
-        // return response()->json($request->all());
+     
         $vs = Validator::make($request->all(), [
             'paniers' => 'required|array',
             'paniers.*.nom' => 'required|string',
@@ -193,7 +193,7 @@ class CommandeController extends Controller
 
     public function reclameGift(Request $request)
     {
-        // return response()->json($request->ref);
+        
         $commande = Commande::where('ref', $request->ref)->where("isGift", true)->first();
         
         $commande->update([
