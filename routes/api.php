@@ -37,6 +37,7 @@ Route::middleware('api.auth')->group(function () {
     Route::get("bon-achat", [CommandeController::class, 'getBonDachat']);
     Route::post("reset-bon-achat", [CommandeController::class, 'resetBonDachat']);
     Route::get("produit/gifts", [CommandeController::class, 'getGift']);
+    Route::post("produit/reclame-gifts", [CommandeController::class, 'reclameGift']);
 });
 Route::get("commande/{ref}", [CommandeController::class, 'getProduitByRef']);
 Route::get("/remise-article", [RemisearticleController::class, 'index']);
