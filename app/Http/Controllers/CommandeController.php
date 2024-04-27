@@ -159,12 +159,20 @@ class CommandeController extends Controller
 
     public function resetBonDachat(Request $request)
     {
+        $vs = Validator::make($request->all(), [
+            'montant' => 'required|numeric',
+        ]);
+
+        if ($vs->fails()) {
+            return response()->json($vs->errors(), 422);
+        }
+
         $request->user->bon_achat()->update([
             'montant' => $request->montant,
         ]);
-
+        $request->user->bon_achat->fresh();
         return response()->json([
-            "montant" => 0,
+            "montant" => $request->user->bon_achat->montant,
         ]);
     }
 
