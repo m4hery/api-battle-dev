@@ -173,7 +173,7 @@ class CommandeController extends Controller
         $commandes = Commande::where('user_id', $request->user->id)->where("isGift", true)->where("isGiftTake", false)->get();
         $data = [];
         foreach ($commandes as $commande) {
-            $data = $commande->info_commande;
+            $data[] = $commande->info_commande;
         }
 
         return response()->json($data);
