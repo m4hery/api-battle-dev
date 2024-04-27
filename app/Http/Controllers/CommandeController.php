@@ -89,7 +89,7 @@ class CommandeController extends Controller
             {
                 $montantTotalCommande = $commande->chocolatCommandes->sum('totalPrice');
 
-                if((int)$montantTotalCommande < 200000 )
+                if((int)$montantTotalCommande > 200000 )
                 {
                     $comm = Commande::create([
                         'user_id' => $user_source->id,
