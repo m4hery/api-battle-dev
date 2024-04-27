@@ -56,7 +56,7 @@ class CommandeController extends Controller
     public function store(Request $request)
     {
         $vs = Validator::make($request->all(), [
-            'paniers' => 'required|array',
+            // 'paniers' => 'required|array',
             'paniers.*.nom' => 'required|string',
             'paniers.*.quantity' => 'required|integer',
             'paniers.*.totalPrice' => 'required|numeric',
