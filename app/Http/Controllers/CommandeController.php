@@ -181,7 +181,7 @@ class CommandeController extends Controller
 
     public function reclameGift(Request $request)
     {
-        return response()->json($request->ref);
+        // return response()->json($request->ref);
         $commande = Commande::where('ref', $request->ref)->first();
         
         $commande->update([
